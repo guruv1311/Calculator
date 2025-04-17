@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="App">
+    <div class="calculator-box">
+      <h1>🧮 Calculator</h1>
+      <div class="results">
+        <input type="text" id="input" readonly />
+      </div>
+      <div class="buttons">
+        <!-- Buttons will be dynamically created -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById('input');
+    const buttonsContainer = document.querySelector('.buttons');
+    const buttons = ['7','8','9','/','4','5','6','*','1','2','3','-','0','.','=','+','C'];
+
+    buttons.forEach((btn) => {
+      const button = document.createElement('button');
+      button.textContent = btn;
+      button.onclick = () => {
+        if (btn === 'C') {
+          input.value = '';
+        } else if (btn === '=') {
+          fetch('http://localhost:4000/calculate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ expression: input.value })
+          })
+          .then(res => res.json())
+          .then(data => input.value = data.result)
+          .catch(err => {
+            input.value = 'Error';
+            console.error(err);
+          });
+        } else {
+          input.value += btn;
+        }
+      };
+      buttonsContainer.appendChild(button);
+    });
+  </script>
+</body>
+</html>
