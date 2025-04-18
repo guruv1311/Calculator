@@ -1,20 +1,26 @@
-# Use official Node.js base image
+# Use official Node.js image
 FROM node:18
 
-# Set working directory
-WORKDIR /app
-
-# Copy backend files and install dependencies
-COPY backend backend
+# Set working directory for backend
 WORKDIR /app/backend
-RUN npm install
 
-# Move back to root and copy frontend
-WORKDIR /app
-COPY frontend frontend
+# Copy backend files
+COPY backend/package*.json ./
+RUN npm install --only=production
+COPY backend/ .
 
-# Expose backend port
+# Set working directory for frontend
+WORKDIR /app/frontend
+COPY frontend/ .
+
+# Install serve to host frontend
+RUN npm install -g serve
+
+# Expose ports
+EXPOSE 8080
 EXPOSE 4000
 
-# Start backend server
-CMD ["node", "backend/server.js"]
+# Start both frontend and backend using a small shell script
+WORKDIR /app
+
+CMD sh -c "node backend/server.js & serve -s frontend -l 8080"
