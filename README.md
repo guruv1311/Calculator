@@ -14,15 +14,19 @@ A simple calculator application built to perform basic arithmetic operations. Th
 ## 📁 Project Structure
 
 ```
-Calculator/
-├── src/               # Source code
-│   ├── main.py        # Main application entry point
-│   └── calculator.py  # Core logic for operations
-├── tests/             # Unit tests
-│   └── test_calc.py   # Test cases for calculator functions
-├── requirements.txt   # List of dependencies (Python)
-├── README.md          # Project documentation
-└── .gitignore         # Files/folders to ignore in git
+calculator-app/
+├── backend/
+│   ├── server.js               # Express backend server
+│   └── package.json            # Backend dependencies and scripts
+│
+├── frontend/
+│   ├── index.html              # Main HTML file
+│   ├── style.css               # Stylesheet
+│   └── script.js               # Calculator logic with fetch() call
+│
+├── Dockerfile                 # Dockerfile for building full app
+├── README.md                  # Documentation
+
 ```
 
 > Modify the structure based on your actual files.
