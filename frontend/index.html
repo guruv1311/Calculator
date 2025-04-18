@@ -31,7 +31,7 @@
         if (btn === 'C') {
           input.value = '';
         } else if (btn === '=') {
-          fetch('http://localhost:3000/calculate', {
+            fetch('/calculate', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ expression: input.value })
